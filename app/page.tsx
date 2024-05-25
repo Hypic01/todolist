@@ -23,16 +23,20 @@ export default function Home() {
   };
 
   const addTodo = async () => {
-    const res = await fetch("/api/todos", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text: newTodo }),
-    });
-    const data = await res.json();
-    setTodos((prevTodos) => [...prevTodos, data.data]);
-    setNewTodo("");
+    if(newTodo) {
+      const res = await fetch("/api/todos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: newTodo }),
+      });
+      const data = await res.json();
+      setTodos((prevTodos) => [...prevTodos, data.data]);
+      setNewTodo("");
+    } else {
+      alert("Item must not be empty!")
+    }
   };
 
   const updateTodo = async (id: string, completed: boolean) => {
